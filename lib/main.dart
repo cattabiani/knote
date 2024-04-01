@@ -20,16 +20,8 @@ class KNoteScreen extends StatefulWidget {
   _KNoteScreenState createState() => _KNoteScreenState();
 }
 
-class Note {
-  String title;
-  String info;
-
-  Note(this.title, this.info);
-}
-
-
 class _KNoteScreenState extends State<KNoteScreen> {
-  List<Note> items = [];
+  List items = [];
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +59,8 @@ class _KNoteScreenState extends State<KNoteScreen> {
                   onTap: () {
                     _editItem(context, i);
                   },
-                  title: Text(items[i].title),
-                  subtitle: Text(items[i].info), 
+                  title: Text(items[i][0]),
+                  subtitle: Text(items[i][1]), 
                 ),
               ),
             ),
@@ -86,13 +78,13 @@ class _KNoteScreenState extends State<KNoteScreen> {
 
   void _addItem(BuildContext context) {
     int n = items.length;
-    items.add(Note('Item $n',''));
+    items.add(['Item $n','']);
     _editItem(context, items.length-1);
   }
 
   void _editItem(BuildContext context, int index) {
-    TextEditingController controllerTitle = TextEditingController(text: items[index].title);
-    TextEditingController controllerInfo = TextEditingController(text: items[index].info);
+    TextEditingController controllerTitle = TextEditingController(text: items[index][0]);
+    TextEditingController controllerInfo = TextEditingController(text: items[index][1]);
     FocusNode focusNodeTitle = FocusNode();
 
     showDialog(
@@ -120,8 +112,8 @@ class _KNoteScreenState extends State<KNoteScreen> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  items[index].title = controllerTitle.text;
-                  items[index].info = controllerInfo.text;
+                  items[index][0] = controllerTitle.text;
+                  items[index][1] = controllerInfo.text;
                 });
                 Navigator.of(context).pop();
               },
