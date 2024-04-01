@@ -1,54 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
-  runApp(KNote());
+  runApp(KNoteApp());
 }
 
-class KNote extends StatelessWidget {
+class KNoteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'KNote',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
+      home: KNoteScreen(),
     );
   }
 }
 
-class HomeScreen extends StatefulWidget {
+class KNoteScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _KNoteScreenState createState() => _KNoteScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<String> _l = [];
-  List<FocusNode> _lf = [];
+class Note {
+  String title;
+  String info;
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize _lf with a FocusNode for each text field in _l
-    _lf = List.generate(_l.length, (index) => FocusNode());
-  }
+  Note(this.title, this.info);
+}
 
 
-  @override
-  void dispose() {
-    for (var node in _lf) {
-      node.dispose();
-    }
-    super.dispose();
-  }
-
-  void _addNote() {
-    setState(() {
-      _lf.add(FocusNode());
-      _l.add('');
-      _lf[_lf.length-1].requestFocus();
-    });
-  }
+class _KNoteScreenState extends State<KNoteScreen> {
+  List<Note> items = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,30 +37,109 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('KNote'),
       ),
-      body: ListView.builder(
-        itemCount: _l.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: TextField(
-              focusNode: _lf[index], // Associate the focus node with the text field
-              onChanged: (value) {
-                // Update the corresponding string in _l when the text changes
-                setState(() {
-                  _l[index] = value;
-                });
+      body: ReorderableListView(
+        onReorder: (oldIndex, newIndex) {
+          setState(() {
+            if (newIndex > oldIndex) {
+              newIndex -= 1;
+            }
+            final item = items.removeAt(oldIndex);
+            items.insert(newIndex, item);
+          });
+        },
+        children: [
+          for (int i = 0; i < items.length; ++i)
+            Dismissible(
+              key: ValueKey<String>(Uuid().v4()),
+              background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Icon(Icons.delete, color: Colors.white),
+              ),
+              onDismissed: (direction) {
+                items.removeAt(i);
+                setState(() {});
               },
-              decoration: InputDecoration(
-                hintText: 'Note',
+              child: Container(
+                color: i % 2 == 1 ? Colors.white : Colors.grey[200], // Alternating colors
+                child: ListTile(
+                  onTap: () {
+                    _editItem(context, i);
+                  },
+                  title: Text(items[i].title),
+                  subtitle: Text(items[i].info), 
+                ),
               ),
             ),
-          );
-        },
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addNote,
+        onPressed: () {
+          _addItem(context);
+        },
         tooltip: 'Add Note',
         child: Icon(Icons.add),
       ),
     );
   }
+
+  void _addItem(BuildContext context) {
+    int n = items.length;
+    items.add(Note('Item $n',''));
+    _editItem(context, items.length-1);
+  }
+
+  void _editItem(BuildContext context, int index) {
+    TextEditingController controllerTitle = TextEditingController(text: items[index].title);
+    TextEditingController controllerInfo = TextEditingController(text: items[index].info);
+    FocusNode focusNodeTitle = FocusNode();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        controllerTitle.selection = TextSelection(baseOffset: 0, extentOffset: controllerTitle.text.length);
+        return AlertDialog(
+          title: Text('Edit Item'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: controllerTitle,
+                decoration: InputDecoration(labelText: 'Title'),
+                focusNode: focusNodeTitle,
+              ),
+              TextField(
+                controller: controllerInfo,
+                maxLines: null, // Allow multiple lines
+                decoration: InputDecoration(labelText: 'Info'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  items[index].title = controllerTitle.text;
+                  items[index].info = controllerInfo.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+
+    focusNodeTitle.requestFocus();
+  }
+
+
 }
