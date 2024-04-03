@@ -55,7 +55,7 @@ Contributions to KNote are welcome! If you have any suggestions, bug fixes, or n
 
 ## License
 
-KNote is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+KNote is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
 
 ---
 
