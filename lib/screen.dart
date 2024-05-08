@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import 'item.dart';
 import 'database.dart';
 
 class KNoteScreen extends StatefulWidget {
@@ -59,8 +60,8 @@ class _KNoteScreenState extends State<KNoteScreen> {
                   onTap: () {
                     _editItem(context, i);
                   },
-                  title: Text(db.items[i][0]),
-                  subtitle: Text(db.items[i][1]),
+                  title: Text(db.items[i].title),
+                  subtitle: Text(db.items[i].info),
                 ),
               ),
             ),
@@ -78,16 +79,16 @@ class _KNoteScreenState extends State<KNoteScreen> {
 
   void _addItem(BuildContext context) {
     int n = db.items.length;
-    db.items.add(['Item $n', '']);
+    db.items.add(Item('Item $n', ''));
     _editItem(context, db.items.length - 1);
     db.update();
   }
 
   void _editItem(BuildContext context, int index) {
     TextEditingController controllerTitle =
-        TextEditingController(text: db.items[index][0]);
+        TextEditingController(text: db.items[index].title);
     TextEditingController controllerInfo =
-        TextEditingController(text: db.items[index][1]);
+        TextEditingController(text: db.items[index].info);
     FocusNode focusNodeTitle = FocusNode();
 
     showDialog(
@@ -115,20 +116,20 @@ class _KNoteScreenState extends State<KNoteScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
                 setState(() {
-                  db.items[index][0] = controllerTitle.text;
-                  db.items[index][1] = controllerInfo.text;
+                  db.items[index].title = controllerTitle.text;
+                  db.items[index].info = controllerInfo.text;
                 });
                 db.update();
                 Navigator.of(context).pop();
               },
               child: Text('Save'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
             ),
           ],
         );

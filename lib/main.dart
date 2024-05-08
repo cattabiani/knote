@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'item.dart';
 import 'screen.dart';
 
 void main() async {
   await Hive.initFlutter();
+
+  // Register adapter
+  Hive.registerAdapter(ItemAdapter());
 
   var box = await Hive.openBox("box0");
 
@@ -21,3 +26,6 @@ class KNoteApp extends StatelessWidget {
     );
   }
 }
+
+
+
