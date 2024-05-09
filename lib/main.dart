@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'balanceSheet.dart';
 import 'item.dart';
 import 'screen.dart';
 
@@ -10,6 +11,7 @@ void main() async {
 
   // Register adapter
   Hive.registerAdapter(ItemAdapter());
+  Hive.registerAdapter(BalanceSheetAdapter());
 
   var box = await Hive.openBox("box0");
 
