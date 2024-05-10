@@ -32,13 +32,6 @@ class _EditBalanceSheetScreenState extends State<EditBalanceSheetScreen> {
           decoration: InputDecoration(labelText: 'Title'),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _saveChanges();
-          Navigator.of(context).pop();
-        },
-        child: Icon(Icons.save),
-      ),
     );
   }
 
@@ -46,3 +39,5 @@ class _EditBalanceSheetScreenState extends State<EditBalanceSheetScreen> {
     widget.balanceSheet.title = _controller.text;
   }
 }
+
+

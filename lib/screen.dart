@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import 'balanceSheet.dart';
-// import 'editBalanceSheetScreen.dart';
+import 'editBalanceSheetScreen.dart';
 import 'item.dart';
 import 'database.dart';
 
@@ -42,7 +42,7 @@ class _KNoteScreenState extends State<KNoteScreen> {
         children: [
           for (int i = 0; i < db.items.length; ++i)
             Dismissible(
-              key: ValueKey<String>(Uuid().v4()),
+              key: UniqueKey(),
               background: Container(
                 color: Colors.red,
                 alignment: Alignment.centerRight,
@@ -74,6 +74,7 @@ class _KNoteScreenState extends State<KNoteScreen> {
     mainAxisAlignment: MainAxisAlignment.end,
     children: [
       FloatingActionButton(
+        heroTag: null, 
         onPressed: () {
           _addBalanceSheet(context);
         },
@@ -83,6 +84,7 @@ class _KNoteScreenState extends State<KNoteScreen> {
       ),
       SizedBox(width: 16), // Add some spacing between the buttons
       FloatingActionButton(
+        heroTag: null, 
         onPressed: () {
           _addItem(context);
         },
@@ -104,9 +106,16 @@ class _KNoteScreenState extends State<KNoteScreen> {
   void _addBalanceSheet(BuildContext context) {
     int n = db.items.length;
     db.items.add(BalanceSheet('Balance Sheet $n'));
-    setState(() {});
-    db.update();
+
+    // Navigate to a new screen
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => EditBalanceSheetScreen(balanceSheet: db.items[n])),
+    ).then((_) {
+      setState(() {});
+      db.update();
+    });
   }
+
 
   void _editItem(BuildContext context, int index) {
     TextEditingController controllerTitle =
