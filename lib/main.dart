@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'balanceSheet.dart';
 import 'item.dart';
-import 'screen.dart';
+import 'mainScreen.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -24,7 +24,7 @@ class KNoteApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KNote',
-      home: KNoteScreen(),
+      home: KNoteMainScreen(),
     );
   }
 }

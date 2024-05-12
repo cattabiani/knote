@@ -17,16 +17,23 @@ class BalanceSheetAdapter extends TypeAdapter<BalanceSheet> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BalanceSheet(
-      fields[0] as String,
+      fields[0] == null ? 'default Value' : fields[0] as String,
+      fields[1] == null
+          ? [
+              ['self']
+            ]
+          : (fields[1] as List).cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, BalanceSheet obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.title);
+      ..write(obj.title)
+      ..writeByte(1)
+      ..write(obj.results);
   }
 
   @override

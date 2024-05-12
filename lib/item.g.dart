@@ -17,8 +17,8 @@ class ItemAdapter extends TypeAdapter<Item> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Item(
-      fields[0] as String,
-      fields[1] as String,
+      fields[0] == null ? 'default value' : fields[0] as String,
+      fields[1] == null ? 'default value' : fields[1] as String,
     );
   }
 
