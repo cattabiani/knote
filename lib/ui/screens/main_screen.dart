@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+// import 'package:uuid/uuid.dart';
 
-import 'balanceSheet.dart';
-import 'balanceSheetScreen.dart';
-import 'item.dart';
-import 'database.dart';
+import '../../models/balance_sheet.dart';
+import 'balance_sheet_screen.dart';
+import '../../models/item.dart';
 
+import '../../models/database.dart';
 
 class KNoteMainScreen extends StatefulWidget {
-  KNoteDataBase db = KNoteDataBase();
+  final KNoteDataBase db = KNoteDataBase();
+
+  KNoteMainScreen({super.key});
+
   @override
-  _KNoteMainScreenState createState() => _KNoteMainScreenState();
+  KNoteMainScreenState createState() => KNoteMainScreenState();
 }
 
-class _KNoteMainScreenState extends State<KNoteMainScreen> {
-  
-
+class KNoteMainScreenState extends State<KNoteMainScreen> {
   @override
   void initState() {
     widget.db.load();
@@ -27,7 +28,7 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('KNote'),
+        title: const Text('KNote'),
       ),
       body: ReorderableListView(
         onReorder: (oldIndex, newIndex) {
@@ -47,8 +48,8 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
               background: Container(
                 color: Colors.red,
                 alignment: Alignment.centerRight,
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Icon(Icons.delete, color: Colors.white),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: const Icon(Icons.delete, color: Colors.white),
               ),
               onDismissed: (direction) {
                 setState(() {
@@ -58,14 +59,21 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
               },
               child: Container(
                 color: widget.db.items[i] is Item
-                  ? (i % 2 == 1 ? Colors.white : Colors.grey[200]) // Blue shades for balance sheet items
-                  : (i % 2 == 1 ? Colors.green[100] : Colors.green[200]),  // Alternating colors
+                    ? (i % 2 == 1
+                        ? Colors.white
+                        : Colors
+                            .grey[200]) // Blue shades for balance sheet items
+                    : (i % 2 == 1
+                        ? Colors.green[50]
+                        : Colors.green[100]), // Alternating colors
                 child: ListTile(
                   onTap: () {
                     _editEntry(context, i);
                   },
                   title: Text(widget.db.items[i].title),
-                  subtitle: widget.db.items[i] is Item ? Text(widget.db.items[i].info) : null,
+                  subtitle: widget.db.items[i] is Item
+                      ? Text(widget.db.items[i].info)
+                      : null,
                 ),
               ),
             ),
@@ -75,22 +83,32 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            heroTag: null, 
+            heroTag: null,
             onPressed: () {
               _addBalanceSheet(context);
             },
             tooltip: 'Open Balance Sheet',
-            backgroundColor: Colors.green, // Change background color
-            child: Icon(Icons.account_balance),
+            backgroundColor: Colors.green[100], // Change background color
+            child: const Icon(Icons.account_balance),
           ),
-          SizedBox(width: 16), // Add some spacing between the buttons
+          const SizedBox(width: 16), // Add some spacing between the buttons
           FloatingActionButton(
-            heroTag: null, 
+            heroTag: null,
             onPressed: () {
               _addItem(context);
             },
             tooltip: 'Add Note',
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(width: 16), // Add some spacing between the buttons
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: () {
+              widget.db.clear();
+              setState(() {});
+            },
+            tooltip: 'Clear',
+            child: const Icon(Icons.clear),
           ),
         ],
       ),
@@ -106,10 +124,10 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
 
   void _addBalanceSheet(BuildContext context) {
     int n = widget.db.items.length;
-    widget.db.items.add(BalanceSheet('Balance Sheet $n', [["self"]]));
+    widget.db.items.add(BalanceSheet.defaults(n));
 
     setState(() {});
-    _editBalanceSheet(context, widget.db, n);
+    _editBalanceSheet(context, n);
   }
 
   void _editEntry(BuildContext context, int index) {
@@ -118,19 +136,22 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
     if (item is Item) {
       _editItem(context, index);
     } else if (item is BalanceSheet) {
-      _editBalanceSheet(context, widget.db, index);
+      _editBalanceSheet(context, index);
     }
   }
 
-  void _editBalanceSheet(BuildContext context, KNoteDataBase db, int index) {
+  void _editBalanceSheet(BuildContext context, int index) {
     // Navigate to a new screen
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => KNoteBalanceSheetScreen(db: db, index: index)),
-    ).then((_) {
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+          builder: (context) => KNoteBalanceSheetScreen(
+              db: widget.db, balanceSheet: widget.db.items[index])),
+    )
+        .then((_) {
       setState(() {});
     });
   }
-
 
   void _editItem(BuildContext context, int index) {
     TextEditingController controllerTitle =
@@ -145,19 +166,19 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
         controllerTitle.selection = TextSelection(
             baseOffset: 0, extentOffset: controllerTitle.text.length);
         return AlertDialog(
-          title: Text('Edit Item'),
+          title: const Text('Edit Item'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextField(
                 controller: controllerTitle,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
                 focusNode: focusNodeTitle,
               ),
               TextField(
                 controller: controllerInfo,
                 maxLines: null, // Allow multiple lines
-                decoration: InputDecoration(labelText: 'Info'),
+                decoration: const InputDecoration(labelText: 'Info'),
               ),
             ],
           ),
@@ -166,7 +187,7 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -177,7 +198,7 @@ class _KNoteMainScreenState extends State<KNoteMainScreen> {
                 widget.db.update();
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );

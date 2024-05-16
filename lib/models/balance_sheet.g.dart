@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'balanceSheet.dart';
+part of 'balance_sheet.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -17,23 +17,22 @@ class BalanceSheetAdapter extends TypeAdapter<BalanceSheet> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BalanceSheet(
-      fields[0] == null ? 'default Value' : fields[0] as String,
-      fields[1] == null
-          ? [
-              ['self']
-            ]
-          : (fields[1] as List).cast<dynamic>(),
+      fields[0] == null ? 'default value' : fields[0] as String,
+      fields[1] == null ? [] : (fields[1] as List).cast<TransactionResult>(),
+      fields[2] == null ? [] : (fields[2] as List).cast<Transaction>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, BalanceSheet obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.results);
+      ..write(obj.results)
+      ..writeByte(2)
+      ..write(obj.log);
   }
 
   @override

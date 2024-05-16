@@ -18,4 +18,9 @@ class KNoteDataBase {
   void update() {
     _box.put("items", items);
   }
+
+  void clear() {
+    items = [];
+    update();
+  }
 }

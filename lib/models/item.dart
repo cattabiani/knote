@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'item.g.dart'; // This is the generated file
 
 @HiveType(typeId: 0) // Assign a typeId for your class
-class Item  {
+class Item {
   @HiveField(0, defaultValue: "default value")
   String title;
 
