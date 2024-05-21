@@ -29,3 +29,7 @@ int str2cents(String value) {
   // Parse the cleaned value as an integer
   return cleanedValue.isEmpty ? 0 : int.parse(cleanedValue);
 }
+
+int bool2int(bool v) {
+  return v ? 1 : 0;
+}

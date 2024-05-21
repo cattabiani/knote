@@ -6,28 +6,28 @@ part of 'item.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ItemAdapter extends TypeAdapter<Item> {
+class KItemAdapter extends TypeAdapter<KItem> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  Item read(BinaryReader reader) {
+  KItem read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Item(
-      fields[0] == null ? 'default value' : fields[0] as String,
-      fields[1] == null ? 'default value' : fields[1] as String,
+    return KItem(
+      fields[0] as String,
+      fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Item obj) {
+  void write(BinaryWriter writer, KItem obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.title)
+      ..write(obj.name)
       ..writeByte(1)
       ..write(obj.info);
   }
@@ -38,7 +38,7 @@ class ItemAdapter extends TypeAdapter<Item> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ItemAdapter &&
+      other is KItemAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

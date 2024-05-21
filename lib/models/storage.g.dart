@@ -1,38 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'balance_sheet.dart';
+part of 'storage.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class BalanceSheetAdapter extends TypeAdapter<BalanceSheet> {
+class KStorageAdapter extends TypeAdapter<KStorage> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
-  BalanceSheet read(BinaryReader reader) {
+  KStorage read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return BalanceSheet(
-      fields[0] == null ? 'default value' : fields[0] as String,
-      fields[1] == null ? [] : (fields[1] as List).cast<TransactionResult>(),
-      fields[2] == null ? [] : (fields[2] as List).cast<Transaction>(),
+    return KStorage(
+      (fields[0] as List).cast<KItem>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, BalanceSheet obj) {
+  void write(BinaryWriter writer, KStorage obj) {
     writer
-      ..writeByte(3)
-      ..writeByte(0)
-      ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.results)
-      ..writeByte(2)
-      ..write(obj.log);
+      ..writeByte(0)
+      ..write(obj.items);
   }
 
   @override
@@ -41,7 +35,7 @@ class BalanceSheetAdapter extends TypeAdapter<BalanceSheet> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is BalanceSheetAdapter &&
+      other is KStorageAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
