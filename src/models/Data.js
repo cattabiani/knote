@@ -19,7 +19,7 @@ const Data = {
   },
 
   getNodeByTitle(data, title) {
-    for (const [node] of Object.values(data)) {
+    for (const node of Object.values(data)) {
       if (node.title === title) {
         return node;
       }

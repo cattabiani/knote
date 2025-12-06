@@ -28,7 +28,7 @@
     </div>
 
     <!-- <q-img
-            src="screenshots/screenshot-1.jpeg"
+            src="screenshots/screenshot1.jpeg"
             alt="screenshot1"
             fit="contain"
             class="carousel-image"
@@ -49,27 +49,27 @@
       >
         <!-- Carousel Slides with Images and Descriptions -->
         <q-carousel-slide
-          name="screenshot-1"
+          name="screenshot1"
           class="column no-wrap flex-center"
         >
           <q-img
-            src="screenshots/screenshot-1.jpeg"
+            src="screenshots/screenshot1.png"
             alt="screenshot1"
-            fit="contain"
             class="carousel-image"
+            fit="contain"
           />
           <div class="carousel-caption text-h6 text-center">TODO1</div>
         </q-carousel-slide>
 
         <q-carousel-slide
-          name="screenshot-2"
+          name="screenshot2"
           class="column no-wrap flex-center"
         >
           <q-img
-            src="screenshots/screenshot-2.jpeg"
+            src="screenshots/screenshot2.png"
             alt="screenshot2"
-            fit="contain"
             class="carousel-image"
+            fit="contain"
           />
           <div class="carousel-caption text-h6 text-center">TODO2</div>
         </q-carousel-slide>
@@ -112,7 +112,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 const $q = useQuasar();
 const router = useRouter();
 const deferredPrompt = ref(null);
-const slide = ref("screenshot-1"); // Controls carousel slides
+const slide = ref("screenshot1"); // Controls carousel slides
 
 const installPromptHandler = (event) => {
   event.preventDefault();
