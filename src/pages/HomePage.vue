@@ -80,7 +80,7 @@
       outlined
       label="Title"
       v-model="title"
-      class="q-mb-sm"
+      class="q-mb-sm text-h5"
       ref="titleInput"
       @blur="editTitle"
     >
@@ -131,7 +131,7 @@
                     ? 'bg-white'
                     : 'bg-grey-2'
             "
-            class="q-py-md"
+            class="q-py-md text-h5"
             @dblclick="store.goTo(child.id)"
             v-show="!(child.isMoveUpItem && store.currentNode.id === 'root')"
           >
@@ -154,7 +154,7 @@
             />
 
             <q-item-section>
-              <q-item-label class="text-subtitle1">
+              <q-item-label>
                 <q-item-label>{{ child.title || "(untitled)" }} </q-item-label>
                 <!-- <q-input
                 dense
@@ -179,10 +179,10 @@
       </template>
     </draggable>
 
-    <q-dialog v-model="modalMode">
+    <q-dialog v-model="modalMode" position="top">
       <q-card
         class="q-pa-none"
-        style="width: 80%; height: 80%; display: flex; flex-direction: column"
+        style="width: 80%; min-height: 45vh; display: flex; flex-direction: column; margin-top: 15vh;"
       >
         <div
           style="flex: 1; display: flex; flex-direction: column; padding: 1em"
@@ -191,6 +191,7 @@
   ref="modalTextarea"
   v-model="modalText"
   placeholder="Your notes. Each row is a note."
+  class="text-h5"
   style="
     flex: 1;
     min-height: 0;
