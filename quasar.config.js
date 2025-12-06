@@ -131,14 +131,15 @@ export default defineConfig((/* ctx */) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
-      workboxMode: 'GenerateSW',       // simplest option
-      swFilename: 'sw.js',             // default
+      workboxMode: 'GenerateSW', // simplest option
+      swFilename: 'sw.js', // default
       manifestFilename: 'manifest.json',
-      injectPwaMetaTags: true,         // auto adds meta tags
-      extendGenerateSWOptions(cfg) {   // optional, leave default for now
+      injectPwaMetaTags: true, // auto adds meta tags
+      extendGenerateSWOptions(cfg) {
+        // optional, leave default for now
         // cfg.skipWaiting = true
         // cfg.clientsClaim = true
-      }
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova

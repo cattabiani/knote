@@ -1,6 +1,6 @@
-# knote (knote)
+# knote
 
-A Quasar Project
+A privacy-focused PWA note-taking application with full offline support. Organize your thoughts with nested notes, drag-and-drop reordering, and undo/redo functionality. No internet required: all data stays on your device.
 
 ## Install the dependencies
 
@@ -13,7 +13,9 @@ npm install
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
-quasar dev
+yarn dev
+# or
+npm run dev
 ```
 
 ### Lint the files
@@ -35,7 +37,25 @@ npm run format
 ### Build the app for production
 
 ```bash
-quasar build
+yarn build
+# or
+npm run build
+```
+
+### Run tests
+
+```bash
+yarn test
+# or
+npm run test
+```
+
+### Deploy to GitHub Pages
+
+```bash
+yarn deploy
+# or
+npm run deploy
 ```
 
 ### Customize the configuration

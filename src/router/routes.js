@@ -1,25 +1,25 @@
 const routes = [
   {
-    path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: "", redirect: { name: "HomePage" } },
+      { path: '', redirect: { name: 'HomePage' } },
       {
-        path: "/home",
-        name: "HomePage",
-        component: () => import("pages/HomePage.vue"),
+        path: '/home',
+        name: 'HomePage',
+        component: () => import('pages/HomePage.vue'),
       },
       {
-        path: "/landing",
-        name: "LandingPage",
-        component: () => import("pages/LandingPage.vue"),
+        path: '/landing',
+        name: 'LandingPage',
+        component: () => import('pages/LandingPage.vue'),
       },
     ],
   },
   {
-    path: "/:catchAll(.*)*",
-    component: () => import("pages/ErrorNotFound.vue"),
+    path: '/:catchAll(.*)*',
+    component: () => import('pages/ErrorNotFound.vue'),
   },
-];
+]
 
-export default routes;
+export default routes
