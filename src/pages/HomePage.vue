@@ -62,7 +62,7 @@
     </q-toolbar>
   </q-header>
 
-  <q-page class="column q-pa-md">
+  <q-page class="column">
     <q-input
       v-if="store.currentNode.id !== `root`"
       outlined
