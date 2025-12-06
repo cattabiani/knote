@@ -24,15 +24,8 @@
     <!-- App Title -->
     <div class="text-h4 text-weight-bold text-primary q-mb-sm">KNote</div>
     <div class="text-subtitle1 text-center q-mb-lg">
-      The best way to manage your memos!
+      The best way to manage your notes!
     </div>
-
-    <!-- <q-img
-            src="screenshots/screenshot1.jpeg"
-            alt="screenshot1"
-            fit="contain"
-            class="carousel-image"
-          /> -->
 
     <div class="q-pa-md">
       <!-- Carousel with Images and Captions -->
@@ -48,31 +41,41 @@
         class="bg-white text-primary shadow-1 rounded-borders"
       >
         <!-- Carousel Slides with Images and Descriptions -->
-        <q-carousel-slide
-          name="screenshot1"
-          class="column no-wrap flex-center"
-        >
+        <q-carousel-slide name="add_notes" class="column" style="height: 100%; justify-content: space-between;">
           <q-img
-            src="screenshots/screenshot1.png"
-            alt="screenshot1"
-            class="carousel-image"
+            src="screenshots/add_notes.png"
+            alt="Add Notes"
             fit="contain"
+            style="flex: 1; width: 100%;"
           />
-          <div class="carousel-caption text-h6 text-center">TODO1</div>
+          <div class="carousel-caption text-h6 text-center">
+            Easily add nodes at once
+          </div>
         </q-carousel-slide>
 
-        <q-carousel-slide
-          name="screenshot2"
-          class="column no-wrap flex-center"
-        >
+        <q-carousel-slide name="completed" class="column" style="height: 100%; justify-content: space-between;">
           <q-img
-            src="screenshots/screenshot2.png"
-            alt="screenshot2"
-            class="carousel-image"
+            src="screenshots/completed.png"
+            alt="Completed"
             fit="contain"
+            style="flex: 1; width: 100%;"
           />
-          <div class="carousel-caption text-h6 text-center">TODO2</div>
+          <div class="carousel-caption text-h6 text-center">
+            Nest notes and swipe to complete
+          </div>
         </q-carousel-slide>
+
+<q-carousel-slide name="undo_redo" class="column" style="height: 100%; justify-content: space-between;">
+  <q-img
+    src="screenshots/undo_redo.png"
+    alt="Undo/redo"
+    fit="contain"
+    style="flex: 1; width: 100%;"
+  />
+  <div class="carousel-caption text-h6 text-center q-mt-sm q-mb-sm">
+    Undo or redo your actions seamlessly
+  </div>
+</q-carousel-slide>
       </q-carousel>
     </div>
 
@@ -93,7 +96,7 @@
         label="Use without Installing"
         flat
         color="grey"
-        @click="goToHome"
+        @click="goHome"
       />
     </div>
   </q-page>
@@ -101,18 +104,19 @@
 
 <script setup>
 defineOptions({
-  name: "LandingPage",
+  name: 'LandingPage',
 });
 
-import Utils from "src/utils/utils";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import Utils from 'src/utils/utils';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const $q = useQuasar();
 const router = useRouter();
 const deferredPrompt = ref(null);
-const slide = ref("screenshot1"); // Controls carousel slides
+const slide = ref('add_notes'); // Controls carousel slides
+
 
 const installPromptHandler = (event) => {
   event.preventDefault();
@@ -120,11 +124,11 @@ const installPromptHandler = (event) => {
 };
 
 onMounted(() => {
-  window.addEventListener("beforeinstallprompt", installPromptHandler);
+  window.addEventListener('beforeinstallprompt', installPromptHandler);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("beforeinstallprompt", installPromptHandler);
+  window.removeEventListener('beforeinstallprompt', installPromptHandler);
 });
 
 const installApp = () => {
@@ -133,17 +137,17 @@ const installApp = () => {
   } else if (Utils.isIos()) {
     $q.notify({
       message: "On iOS, use 'Share' → 'Add to Home Screen' to install.",
-      color: "warning",
+      color: 'warning',
     });
   } else {
     $q.notify({
-      message: "No install prompt available!",
-      color: "negative",
+      message: 'No install prompt available!',
+      color: 'negative',
     });
   }
 };
 
-const goToHome = () => {
-  router.replace({ name: "HomePage" });
+const goHome = () => {
+  router.replace({ name: 'HomePage' });
 };
 </script>
