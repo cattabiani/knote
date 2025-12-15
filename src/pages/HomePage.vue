@@ -12,7 +12,7 @@
       <q-btn flat icon="undo" @click="store.undo()" class="q-ml-md bg-white text-primary"> </q-btn>
       <q-btn flat icon="redo" @click="store.redo()" class="q-ml-md bg-white text-primary"> </q-btn>
 
-      <q-btn flat icon="add" @click="addNode()" class="q-ml-md bg-white text-primary"> </q-btn>
+      <q-btn flat icon="add" @click="activateModalMode" class="q-ml-md bg-white text-primary"> </q-btn>
     </q-toolbar>
     <q-toolbar>
       {{ store.currentPath }}
@@ -33,7 +33,7 @@
       >
       </q-btn>
 
-      <q-btn
+      <!-- <q-btn
         flat
         class="q-ml-md bg-white text-primary"
         icon="add"
@@ -58,7 +58,7 @@
           name="add"
           style="position: absolute; top: -5%; left: 40%; font-size: 2.5em; color: var(--q-primary)"
         />
-      </q-btn>
+      </q-btn> -->
     </q-toolbar>
   </q-header>
 
@@ -68,7 +68,7 @@
       outlined
       label="Title"
       v-model="title"
-      class="q-mb-sm text-h5"
+      class="q-ml-sm q-mr-sm q-mt-sm text-h5"
       ref="titleInput"
       @blur="editTitle"
     >
@@ -84,6 +84,7 @@
       animation="200"
       :ghost-class="nestMode ? 'hidden-ghost' : ''"
       @change="onChange"
+      class="q-ma-sm"
     >
       <template #item="{ element: child, index: i }">
         <q-slide-item
@@ -246,10 +247,10 @@ const editTitle = () => {
   }
 }
 
-const addNode = () => {
-  store.addNode()
-  store.goTo(store.currentChildren[store.currentChildren.length - 1].id)
-}
+// const addNode = () => {
+//   store.addNode()
+//   store.goTo(store.currentChildren[store.currentChildren.length - 1].id)
+// }
 
 watch(
   () => store.currentNode.id,
