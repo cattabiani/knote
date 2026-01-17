@@ -98,7 +98,7 @@ describe('History module - basic push test', () => {
     expect(A.title).toBe('B')
   })
 
-  it('swap children', () => {
+  it('move child', () => {
     History.push(history, Events.makeAddNewNode('A', 'root'), data)
     History.push(history, Events.makeAddNewNode('B', 'root'), data)
     History.push(history, Events.makeAddNewNode('C', 'root'), data)
@@ -111,7 +111,7 @@ describe('History module - basic push test', () => {
     const C = data[root.children[2]]
     expect(C.title).toBe('C')
 
-    History.push(history, Events.makeSwapChildren('root', 0, 1), data)
+    History.push(history, Events.makeMoveChild('root', 0, 1), data)
 
     let titles = root.children.map((id) => data[id].title)
     expect(titles).toEqual(['B', 'A', 'C'])

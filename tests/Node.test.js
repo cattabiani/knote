@@ -49,7 +49,7 @@ describe('Node', () => {
     Node.addChild(parent, b)
     Node.addChild(parent, c)
 
-    Node.swapChildren(parent, 1, 0)
+    Node.moveChild(parent, 1, 0)
     expect(parent.children).toEqual([b.id, a.id, c.id])
   })
 

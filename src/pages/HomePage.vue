@@ -12,7 +12,8 @@
       <q-btn flat icon="undo" @click="store.undo()" class="q-ml-md bg-white text-primary"> </q-btn>
       <q-btn flat icon="redo" @click="store.redo()" class="q-ml-md bg-white text-primary"> </q-btn>
 
-      <q-btn flat icon="add" @click="activateModalMode" class="q-ml-md bg-white text-primary"> </q-btn>
+      <q-btn flat icon="add" @click="activateModalMode" class="q-ml-md bg-white text-primary">
+      </q-btn>
     </q-toolbar>
     <q-toolbar>
       {{ store.currentPath }}
@@ -120,11 +121,21 @@
           >
             <q-icon v-if="child.isMoveUpItem" name="arrow_upward" class="q-mr-sm self-center" />
 
-            <q-icon
+            <!-- <q-icon
               v-if="!child.isMoveUpItem && store.showDone"
               :name="child.done ? 'check_circle' : 'radio_button_unchecked'"
               :color="child.done ? 'green' : 'grey-5'"
               class="q-mr-sm self-center"
+            /> -->
+            <q-btn
+              v-if="!child.isMoveUpItem && store.showDone"
+              flat
+              round
+              dense
+              :icon="child.done ? 'check_circle' : 'radio_button_unchecked'"
+              :color="child.done ? 'green' : 'grey-5'"
+              class="q-mr-sm self-center"
+              @click="store.flipDone(child.id)"
             />
             <q-icon v-if="child.isFolder" name="folder_open" class="q-mr-sm self-center" />
 
@@ -311,7 +322,7 @@ const onChange = (evt) => {
       const parentId = childrenList.value[evt.moved.newIndex].id
       store.moveNode(nodeId, parentId)
     } else {
-      store.swapChildren(evt.moved.oldIndex, evt.moved.newIndex)
+      store.moveChild(evt.moved.oldIndex, evt.moved.newIndex)
     }
   }
 }

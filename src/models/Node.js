@@ -34,12 +34,21 @@ const Node = {
     return index
   },
 
-  swapChildren(parent, idx0, idx1) {
-    if (idx0 < 0 || idx1 < 0 || idx0 >= parent.children.length || idx1 >= parent.children.length) {
+  moveChild(parent, fromIdx, toIdx) {
+    const { children } = parent
+
+    if (
+      fromIdx === toIdx ||
+      fromIdx < 0 ||
+      toIdx < 0 ||
+      fromIdx >= children.length ||
+      toIdx >= children.length
+    ) {
       return
     }
 
-    ;[parent.children[idx0], parent.children[idx1]] = [parent.children[idx1], parent.children[idx0]]
+    const [item] = children.splice(fromIdx, 1)
+    children.splice(toIdx, 0, item)
   },
 
   flipDone(node) {

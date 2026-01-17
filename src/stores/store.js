@@ -34,9 +34,9 @@ export const useStore = defineStore('mainStore', {
       const event = Events.makeEditTitle(newTitle, nodeId)
       History.push(this.history, event, this.data)
     },
-    swapChildren(idx0, idx1) {
+    moveChild(idx0, idx1) {
       const node = this.currentNode
-      const event = Events.makeSwapChildren(node.id, idx0, idx1)
+      const event = Events.makeMoveChild(node.id, idx0, idx1)
       History.push(this.history, event, this.data)
     },
     moveNode(nodeId, parentId) {

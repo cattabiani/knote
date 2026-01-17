@@ -102,9 +102,9 @@ const Data = {
     return { oldParent, oldIndex }
   },
 
-  swapChildren(data, nodeId, idx0, idx1) {
+  moveChild(data, nodeId, idx0, idx1) {
     const node = this.getNode(data, nodeId)
-    Node.swapChildren(node, idx0, idx1)
+    Node.moveChild(node, idx0, idx1)
   },
 
   flipDone(data, nodeId) {
@@ -182,9 +182,9 @@ const Data = {
         )
         return Events.makeMoveNode(event.nodeId, oldParent.id, oldIndex)
       }
-      case 'swapChildren': {
-        this.swapChildren(data, event.nodeId, event.idx0, event.idx1)
-        return Events.makeSwapChildren(event.nodeId, event.idx1, event.idx0)
+      case 'moveChild': {
+        this.moveChild(data, event.nodeId, event.idx0, event.idx1)
+        return Events.makeMoveChild(event.nodeId, event.idx1, event.idx0)
       }
       case 'flipDone': {
         this.flipDone(data, event.nodeId)

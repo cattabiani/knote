@@ -89,7 +89,6 @@ describe('Data module', () => {
     expect(data).toEqual(snapshot)
 
     Data.checkIntegrity(data)
-
     ;({ deletedNodes, rootIndex } = Data.removeNode(data, A2.id))
     Data.checkIntegrity(data)
     removedNode = Data.restoreNodes(data, deletedNodes, rootIndex)

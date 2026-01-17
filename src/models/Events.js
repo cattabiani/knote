@@ -19,8 +19,8 @@ const Events = {
     return { type: 'moveNode', nodeId, newParentId, newIndex }
   },
 
-  makeSwapChildren(nodeId, idx0, idx1) {
-    return { type: 'swapChildren', nodeId, idx0, idx1 }
+  makeMoveChild(nodeId, idx0, idx1) {
+    return { type: 'moveChild', nodeId, idx0, idx1 }
   },
 
   makeRestoreNodes(nodes, rootIndex) {
